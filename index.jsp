@@ -6,6 +6,7 @@
 </head>
 	<%
 
+	request.setCharacterEncoding("utf-8");
 	int idx = 1;
 	String title = request.getParameter("title");
 	String writer = request.getParameter("writer");

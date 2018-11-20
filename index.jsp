@@ -7,11 +7,9 @@
 	<%
 
 	request.setCharacterEncoding("utf-8");
-	int idx = 1;
 	String title = request.getParameter("title");
 	String writer = request.getParameter("writer");
 	String regdate= request.getParameter("regdate");
-	int count = 1000;
 	String content = request.getParameter("content");
 
 	%>

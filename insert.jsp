@@ -3,7 +3,7 @@
 <!DOCTYPE jsp  public "-//W3C// DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4.dtd">
 <html>
 <head>
-	<title>본격! 게시판 - 게시글 리스트</title>
+	<title>insert title here</title>
 </head>
 	<%
 
@@ -12,24 +12,33 @@
 	 String regdate= request.getParameter("regdate");
 	 String content = request.getParameter("content");
 
-	 Connection conn=null;
+	 String driverName="com.mysql.jdbc.Driver";
+	 String url = "jdbc:mysql://localhost:3306/board";
+	 String id = "board";
+	 String pwd ="board_4U";
+	
 	 try{
-		String jdbcUrl= "jdbc:mysql://localhost:3306/board" ;
-		String dbId="board";
-		String dbPass= "board_4U";
-	 
-		Class.forName( "com.mysql.jdbc.Driver");
-		conn=DriverManager.getConnection(jdbcUrl,dbId ,dbPass );
-		out.println( "connect success");
-		out.println(conn);
-	  }catch(Exception e){
-		   e.printStackTrace();
-	  }
-
-	 Statement stmt = conn.createStatement();
-	 String sql = "select * from board";
-	 stmt.excuteQuery(sql);
-	 out.print(sql);
+		//[1] JDBC 드라이버 로드
+	 Class.forName(driverName);     
+	 }catch(ClassNotFoundException e){
+	        out.println("Where is your mysql jdbc driver?");
+		e.printStackTrace();
+		return;
+	    }
+	    out.println("mysql jdbc Driver registered!!");
+	   
+	    //[2]데이타베이스 연결 
+	    Connection conn = DriverManager.getConnection(url,id,pwd);
+	    Statement stmt = conn.createStatement();
+	    String sql = "INSERT INTO board(title,writer,regdate,count,content) values('"+title+"','"+writer+"','"+regdate+"',1,'"+content+"')";
+	    int r = stmt.executeUpdate(sql);
+	     
+	    if(r == 1){
+		out.println("1개의 데이터가 추가되었습니다.");
+	    }
+	    //[3]데이타베이스 연결 해제
+	stmt.close();
+	conn.close();
 	%>
 <body>
 </body>

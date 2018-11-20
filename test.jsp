@@ -1,62 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.io.*" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="javax.sql.*" %>
-<%@ page import="javax.naming.*" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="com.jsp.db.DBConn"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+          pageEncoding="UTF-8"%>
+
 <%
-//===================================================
-String url    = "jdbc:mysql://localhost:3306/board"; //1521부분은 님께서 설정한 포트로 바꾸세요.
-String user   = "board";
-String passwd = "board_4U";
+          Connection conn = DBConn.getMysqlConnection();
+          out.print("db connect info" + conn);
 
-//===================================================
-//디비연결 변수
-//---------------------------------------------------
-Connection  conn  = null;
-Statement   stmt  = null;
-ResultSet   rs    = null;
-//===================================================
+          //2. sql
+          Statement stmt = conn.createStatement();
 
-//===================================================
-//쿼리 생성
-//---------------------------------------------------
-//String query      = " SELECT 'RESULT' FROM g4_write_alm ";
+          String sql = "select * from board";
+          stmt.excuteQuery(sql);
 
-String query      = " SELECT *  FROM board.board ";
+          //3. result var
+          ResultSet rs = null;
 
-//---------------------------------------------------
-
-try {
-   //===================================================
-   // MySql Connection Start
-   //---------------------------------------------------
-   Class.forName("com.mysql.jdbc.Driver");//org.gjt.mm.mysql.Driver
-   conn = DriverManager.getConnection(url, user, passwd);
-   //---------------------------------------------------
-
-   //---------------------------------------------------
-   //쿼리 적용
-   //---------------------------------------------------
-   stmt = conn.createStatement();
-   rs = stmt.executeQuery(query);
-   //===================================================
+          if (rs.next()){
+          do{
+          out.print("<br>");
+          out.print(rs.getInt("idx")+ "<br>");
+          out.print(rs.getString("title")+ "<br>");
+          out.print(rs.getString("writer")+ "<br>");
+          out.print(rs.getString("regdate")+ "<br>");
+          out.print(rs.getInt("count")+ "<br>");
+          out.print(rs.getString("content")+ "<br>");
+        }while(rs.next());
+        } else {
+        out.print(" No Result ");
+      }
 
 
-   while(rs.next()) {          // 쿼리 결과 보여주기
-       out.println(rs.getString(1));
-       out.println("<br/>");
-   }
-
-}catch(SQLException se){
- out.println("[CONTENT]쿼리 에러 : SQLException ");
-}catch(NullPointerException ne){
- out.println("[CONTENT]널 에러 : NullPointerException ");
-}catch(Exception e){
- out.println("[CONTENT]에러 : Exception ");
-} finally { 
-  if (rs != null) try {rs.close(); }catch(SQLException ex) {}
-  if (stmt != null) try {stmt.close(); } catch(SQLException ex) {}
-  if (conn != null) try {conn.close(); }catch(SQLException ex) {}
-}
 %>

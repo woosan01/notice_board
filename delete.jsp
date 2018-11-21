@@ -8,49 +8,22 @@
 	<title>본격! 게시판 - 게시글 리스트</title>
 </head>
 	<%
+	String idx = request.getParameter("idx");
+
 	try {
 	String driverName="com.mysql.jdbc.Driver";	
 	String url="jdbc:mysql://localhost:3306/board?useUnicode=true&characterEncoding=UTF-8";
 	//String id = "board";
 	//String pwd = "board_4U";
-	ResultSet rs = null;
 
 	Class.forName(driverName);
 	Connection conn = DriverManager.getConnection(url,"board","board_4U");
 
 	Statement stmt = conn.createStatement();
-	String sql = "select * from board order by idx desc";
-	rs = stmt.executeQuery(sql);
-	
-	%>
-
-<body>
-	<h1>게시글 리스트</h1>
-		<table>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
-			</tr>
-<%
-	while(rs.next()){
-	   out.print("<tr>");
-	out.print("<td> <a href='content.jsp?idx="+ rs.getString("idx") +"'>" + rs.getString("title") + " </a></td>");
-	   //out.print("<td><a href='content.jsp?idx=" + rs.getString("idx")+"'>" + "</a></td>");
-	  // out.print("<td><a href=content.jsp>" + rs.getString("idx") + "</a></td>");
-	  // out.print("<td>" + rs.getString("idx") + "</td>");
-	   //out.print("<td>" + rs.getString(2) +"</td>");
-	   out.print("<td>" + rs.getString(3) + "</td>");
-	   out.print("<td>" + rs.getString(4) + "</td>");
-	   out.print("<td>" + rs.getString(5) + "</td>");
-	   out.print("</tr>"); 
-	}
-%>
-		</table>
-
-	<a href="write.jsp">글쓰기</a>
-<%
+	String sql = "delete from board where idx = " + idx;
+	stmt.executeUpdate(sql);
+	out.println("삭제되었다.");
+		
 	conn.close();
 	
 	}catch (Exception e) {
@@ -59,5 +32,9 @@
 	   e.printStackTrace();
 	}
 %>
+  <script>
+	alert("게시글이 삭제 되었습니다.");
+	location.href = "index.jsp";
+  </script>
 </body>
 </html>

@@ -18,7 +18,6 @@
 		function formCheck() {
 			var title = document.forms[0].title.value;
 			var writer = document.forms[0].writer.value;
-			var regdate = document.forms[0].regdate.value;
 			var content = document.forms[0].content.value;
 
 			if (title == null || title == "") {

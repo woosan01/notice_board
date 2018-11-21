@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 </head>
 <body>
 
@@ -10,8 +10,7 @@
 				onsubmit="return formCheck();">
 		제목 : <input type="text" name="title" /><br/>	
 		작성자 : <input type="text" name="writer" /><br/>	
-		날짜 : <input type="text" name="regdate" /> <br/> 
-		내용 : <textarea rows="10" cols="20" name="content"></textarea>
+		내용 : <textarea rows="10" cols="20" name="content"></textarea> 
 		<input type="submit" />
 	</form>	
 
@@ -38,15 +37,6 @@
 				return false;
 			}
 
-			if (regdate == null || regdate == "") {
-				alert ('날짜를 입력하세요.')
-				document.forms[0].regdate.focus();
-				return false;
-			}else if(regdate.match(/^\d\d\d\d\d\d+$/ig) == null){
-				alert('숫자형식 (6자리)으로 입력하세요.')	
-				document.forms[0].regdate.focus();
-				return false;
-			}	
 
 			if (content == null || content == "") {
 				alert ('내용을 입력하세요.')

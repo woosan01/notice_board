@@ -1,4 +1,5 @@
 <%@ page language="java" contentType = "text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.sql.*"%> 
 <!DOCTYPE jsp	public "-//W3C// DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4.dtd">
 <% request.setCharacterEncoding("utf-8"); %>
 <html>
@@ -19,7 +20,7 @@
 	out.println("Database Connection success.");
 
 	Statement stmt = conn.createStatement();
-	String sql = "select * from board order by idx desc");
+	String sql = "select * from board order by idx desc";
 	rs = stmt.executeQuery(sql);
 	
 	%>
@@ -33,13 +34,6 @@
 				<th>작성자</th>
 				<th>날짜</th>
 				<th>조회수</th>
-			</tr>
-			<tr>
-				<td><%=idx %></td>
-				<td><%=title %></td>
-				<td><%=writer %></td>
-				<td><%=regdate %></td>
-				<td><%=count %></td>
 			</tr>
 <%
 	while(rs.next()){

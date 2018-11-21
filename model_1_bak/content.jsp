@@ -15,15 +15,45 @@
 	String url="jdbc:mysql://localhost:3306/board?useUnicode=true&characterEncoding=UTF-8";
 	//String id = "board";
 	//String pwd = "board_4U";
+	ResultSet rs = null;
 
 	Class.forName(driverName);
 	Connection conn = DriverManager.getConnection(url,"board","board_4U");
 
 	Statement stmt = conn.createStatement();
-	String sql = "delete from board where idx = " + idx;
-	stmt.executeUpdate(sql);
-	out.println("삭제되었다.");
+	String sql = "select * from board where idx = " + idx;
+	rs = stmt.executeQuery(sql);
+	while(rs.next()){
+	%>
+
+<body>
+	<h1>게시글 조회</h1>
+ 	  <table>
+  	    <tr>
+		<th>번호</th>
+		<td><%=rs.getString("idx")%></td>
 		
+		<th>작성자</th>
+		<td><%=rs.getString("writer")%></td>
+		<th>날짜</th>
+		<td><%=rs.getString("regdate")%></td>
+		<th>조회수</th>
+		<td><%=rs.getString("count")%></td>
+	    </tr>
+	    <tr>
+		<th colspan="2">제목</th>
+		<td colspan="6"><%=rs.getString("title")%></td>
+	    </tr>
+	    <tr>
+		<th colspan="2">내용</th>
+		<td colspan="6"><%=rs.getString("content")%></td>
+	    </tr>
+	
+ 	  </table>
+	<a href="delete.jsp?idx=<%=rs.getString("idx")%>">게시글 삭제</a>
+	<a href="index.jsp">목록</a>
+<%
+	}
 	conn.close();
 	
 	}catch (Exception e) {
@@ -32,9 +62,5 @@
 	   e.printStackTrace();
 	}
 %>
-  <script>
-	alert("게시글이 삭제 되었습니다.");
-	location.href = "redirect.jsp";
-  </script>
 </body>
 </html>

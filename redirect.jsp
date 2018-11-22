@@ -1,4 +1,4 @@
  <script>
-	location.href = "index.jsp";
+	location.href = "list.jsp";
   </script>
 

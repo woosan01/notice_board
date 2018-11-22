@@ -42,7 +42,7 @@
 		e.printStackTrace();
 		return;
 	 } finally{
-	 out.print("<script>location.href='index.jsp';</script>");
+	 out.print("<script>location.href='list.jsp';</script>");
 	}
 	    //out.println("mysql jdbc Driver registered!!");
 	    
